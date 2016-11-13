@@ -1,8 +1,9 @@
 <?php
+session_start();
+?>
+<?php
 
-$db = mysqli_connect('localhost', 'root', '') or die(mysql_error());
-	mysqli_select_db($db, "book") or die(mysqli_error());
-	
+include 'setDatabase.php';
 
 if (isset($_POST['username'])){
     $username = $_POST['username'];
@@ -11,6 +12,8 @@ if (isset($_POST['username'])){
     $res = mysqli_query($db, $sql);
     if (mysqli_num_rows($res) == 1) {
         echo "You have successfully logged in.";
+        $_SESSION['username'] = $username;
+            header('Location:  search_book.php');
         exit();
     } else {
         echo "Invalid login information.";
